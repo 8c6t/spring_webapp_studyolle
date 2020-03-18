@@ -37,28 +37,32 @@ public class AccountController {
             return "account/sign-up";
         }
 
-        accountService.processNewAccount(signUpForm);
+        Account account = accountService.processNewAccount(signUpForm);
+        accountService.login(account);
         return "redirect:/";
     }
 
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model) {
         Account account = accountRepository.findByEmail(email);
+        String view = "account/checked-email";
         if (account == null) {
             model.addAttribute("error", "wrong.email");
-            return "account/checked-email";
+            return view;
         }
 
-        if (!account.getEmailCheckToken().equals(token)) {
+        if (!account.isValidToken(token)) {
             model.addAttribute("error", "wrong.token");
-            return "account/checked-email";
+            return view;
         }
 
         account.completeSignUp();
+        accountService.login(account);
+
         model.addAttribute("numberOfUser", accountRepository.count());
         model.addAttribute("nickname", account.getNickname());
 
-        return "account/checked-email";
+        return view;
     }
 
 }
