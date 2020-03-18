@@ -1,5 +1,6 @@
 package com.hachicore.account;
 
+import com.hachicore.domain.Account;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -63,7 +64,11 @@ class AccountControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
 
+        Account account = accountRepository.findByEmail("malang@malang.com");
+        assertNotNull(account);
+        assertNotEquals(account.getPassword(), "12345678");
         assertTrue(accountRepository.existsByEmail("malang@malang.com"));
+
         then(javaMailSender).should().send(any(SimpleMailMessage.class));
     }
 
