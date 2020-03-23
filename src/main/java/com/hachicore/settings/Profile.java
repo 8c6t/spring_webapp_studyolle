@@ -2,8 +2,10 @@ package com.hachicore.settings;
 
 import com.hachicore.domain.Account;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Profile {
 
     private String bio;

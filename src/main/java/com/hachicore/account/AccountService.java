@@ -1,6 +1,7 @@
 package com.hachicore.account;
 
 import com.hachicore.domain.Account;
+import com.hachicore.settings.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -85,4 +86,16 @@ public class AccountService implements UserDetailsService {
         account.completeSignUp();
         login(account);
     }
+
+    @Transactional
+    public void updateProfile(Account account, Profile profile) {
+        account.setUrl(profile.getUrl());
+        account.setOccupation(profile.getOccupation());
+        account.setLocation(profile.getLocation());
+        account.setBio(profile.getBio());
+
+        // TODO 프로필 이미지
+        accountRepository.save(account);
+    }
+
 }
