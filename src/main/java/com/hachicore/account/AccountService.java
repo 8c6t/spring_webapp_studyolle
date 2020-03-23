@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
 
@@ -77,5 +78,11 @@ public class AccountService implements UserDetailsService {
         }
 
         return new UserAccount(account);
+    }
+
+    @Transactional
+    public void completeSignUp(Account account) {
+        account.completeSignUp();
+        login(account);
     }
 }
