@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-8">
-      <h1 class="display-4" th:text="account.nickname">Hachicore</h1>
+      <h1 class="display-4" th:text="${account.nickname}">Hachicore</h1>
       <p class="lead" th:if="${!#strings.isEmpty(account.bio)}" th:text="${account.bio}">bio</p>
       <p class="lead" th:if="${#strings.isEmpty(account.bio) && isOwner}">한 줄 소개를 추가해주세요</p>
     </div>
