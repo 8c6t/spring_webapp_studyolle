@@ -97,4 +97,9 @@ public class AccountService implements UserDetailsService {
         accountRepository.save(account);
     }
 
+    @Transactional
+    public void updatePassword(Account account, String newPassword) {
+        account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
 }
