@@ -1,5 +1,6 @@
-package com.hachicore.settings;
+package com.hachicore.settings.validator;
 
+import com.hachicore.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

@@ -1,4 +1,4 @@
-package com.hachicore.settings;
+package com.hachicore.settings.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

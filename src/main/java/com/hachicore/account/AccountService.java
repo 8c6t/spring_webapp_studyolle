@@ -1,8 +1,8 @@
 package com.hachicore.account;
 
 import com.hachicore.domain.Account;
-import com.hachicore.settings.Notifications;
-import com.hachicore.settings.Profile;
+import com.hachicore.settings.form.Notifications;
+import com.hachicore.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
@@ -106,4 +106,11 @@ public class AccountService implements UserDetailsService {
         modelMapper.map(notifications, account);
         accountRepository.save(account);
     }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);
+        login(account);
+    }
+
 }
