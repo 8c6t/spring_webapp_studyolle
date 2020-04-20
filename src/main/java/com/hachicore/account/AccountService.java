@@ -1,6 +1,7 @@
 package com.hachicore.account;
 
 import com.hachicore.domain.Account;
+import com.hachicore.domain.Tag;
 import com.hachicore.settings.form.Notifications;
 import com.hachicore.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -123,5 +125,10 @@ public class AccountService implements UserDetailsService {
                 + "&email=" + account.getEmail());
 
         javaMailSender.send(mailMessage);
+    }
+
+    public void addTag(Account account, Tag tag) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getTags().add(tag));
     }
 }
