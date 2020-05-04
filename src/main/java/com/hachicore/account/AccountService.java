@@ -2,6 +2,7 @@ package com.hachicore.account;
 
 import com.hachicore.domain.Account;
 import com.hachicore.domain.Tag;
+import com.hachicore.domain.Zone;
 import com.hachicore.settings.form.Notifications;
 import com.hachicore.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
@@ -137,4 +138,22 @@ public class AccountService implements UserDetailsService {
         Optional<Account> byId = accountRepository.findById(account.getId());
         byId.ifPresent(a -> a.getTags().remove(tag));
     }
+
+    public Set<Zone> getZones(Account account) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        return byId.orElseThrow().getZones();
+    }
+
+    @Transactional
+    public void addZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getZones().add(zone));
+    }
+
+    @Transactional
+    public void removeZone(Account account, Zone zone) {
+        Optional<Account> byId = accountRepository.findById(account.getId());
+        byId.ifPresent(a -> a.getZones().remove(zone));
+    }
+
 }
