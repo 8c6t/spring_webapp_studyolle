@@ -18,7 +18,6 @@ public class HtmlEmailService implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
-
     @Override
     public void sendEmail(EmailMessage emailMessage) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -26,7 +25,7 @@ public class HtmlEmailService implements EmailService {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
             mimeMessageHelper.setText(emailMessage.getTo());
             mimeMessageHelper.setSubject(emailMessage.getSubject());
-            mimeMessageHelper.setText(emailMessage.getMessage(), false);
+            mimeMessageHelper.setText(emailMessage.getMessage(), true);
             javaMailSender.send(mimeMessage);
             log.info("sent email: {}" + emailMessage.getMessage());
         } catch (MessagingException e) {
